@@ -62,10 +62,6 @@
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test.png"
     },
     {
-      "name": "person.json",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/person.json"
-    },
-    {
       "name": "renxiang.png",
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/renxiang.png"
     },
@@ -83,7 +79,7 @@
     },
     {
       "name": "user__easyico-2.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/user__easyico-2.png"
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/user_easyico-2.png"
     },
     {
       "name": "user_easyico.png",
