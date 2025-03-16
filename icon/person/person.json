@@ -2,14 +2,6 @@
   "name": "Person",
   "icons": [
     {
-      "name": "07.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/07.png"
-    },
-    {
-      "name": "BARISTA.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/BARISTA.png"
-    },
-    {
       "name": "criminal-fill.png",
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/criminal-fill.png"
     },
@@ -26,44 +18,56 @@
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/haoyou.png"
     },
     {
-      "name": "icon-test-2.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-2.png"
+      "name": "renxiang.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/renxiang.png"
     },
     {
-      "name": "icon-test-3.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-3.png"
+      "name": "yonghu.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/yonghu.png"
     },
     {
-      "name": "icon-test-4.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-4.png"
-    },
-    {
-      "name": "icon-test-5.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-5.png"
-    },
-    {
-      "name": "icon-test-6.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-6.png"
-    },
-    {
-      "name": "icon-test-7.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-7.png"
-    },
-    {
-      "name": "icon-test-8.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-8.png"
-    },
-    {
-      "name": "icon-test-9.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-9.png"
-    },
-    {
-      "name": "icon-test.png",
+      "name": "icon1.png",
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test.png"
     },
     {
-      "name": "renxiang.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/renxiang.png"
+      "name": "icon2.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-2.png"
+    },
+    {
+      "name": "icon3.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-3.png"
+    },
+    {
+      "name": "icon4.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-4.png"
+    },
+    {
+      "name": "icon5.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-5.png"
+    },
+    {
+      "name": "icon6.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-6.png"
+    },
+    {
+      "name": "icon7.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-7.png"
+    },
+    {
+      "name": "icon8.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-8.png"
+    },
+    {
+      "name": "icon9.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/icon-test-9.png"
+    },
+    {
+      "name": "07.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/07.png"
+    },
+    {
+      "name": "BARISTA.png",
+      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/BARISTA.png"
     },
     {
       "name": "touxiang-2.png",
@@ -78,20 +82,16 @@
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/touxiang.png"
     },
     {
-      "name": "user__easyico-2.png",
+      "name": "easyico-2.png",
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/user_easyico-2.png"
     },
     {
-      "name": "user_easyico.png",
+      "name": "easyico.png",
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/user_easyico.png"
     },
     {
-      "name": "x_touxiang.png",
+      "name": "x.png",
       "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/x_touxiang.png"
-    },
-    {
-      "name": "yonghu.png",
-      "url": "https://raw.githubusercontent.com/zxfccmm4/StevePinyin/refs/heads/main/icon/person/yonghu.png"
     }
   ],
   "description": "Person 是一组与用户头像相关的图标集"
