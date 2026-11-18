@@ -13,22 +13,21 @@ concurrency:
 jobs:
   test:
     name: Unit tests (iOS Simulator)
-    runs-on: macos-latest
-    timeout-minutes: 30
+    runs-on: xcode-27
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select newest installed Xcode
+      - name: Pin Xcode 27.1 (matches local dev build 27A9275)
         run: |
-          XCODE_PATH=$(ls -dv /Applications/Xcode*.app | tail -1)
-          echo "Using $XCODE_PATH"
-          sudo xcode-select -s "$XCODE_PATH"
-
-      - name: Show toolchain
-        run: |
+          sudo xcode-select -s /Applications/Xcode_27.1.app
           xcodebuild -version
+
+      - name: Show simulator inventory
+        run: |
           xcrun simctl list runtimes | grep -E '^iOS' || true
+          xcrun simctl list devices available | grep -E 'iPhone' | head -5 || true
 
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4
@@ -40,23 +39,27 @@ jobs:
       - name: Run unit tests
         run: |
           set -o pipefail
-          for DEST in \
-            'platform=iOS Simulator,name=iPhone 17 Pro,OS=newest' \
-            'platform=iOS Simulator,name=iPhone 16 Pro,OS=newest' \
-            'platform=iOS Simulator,name=iPhone 17,OS=newest'
-          do
-            echo "Trying destination: $DEST"
-            rm -rf TestResults.xcresult
-            if xcodebuild test \
-              -project StevePinyin.xcodeproj \
-              -scheme StevePinyin \
-              -destination "$DEST" \
-              -only-testing:StevePinyinTests \
-              -resultBundlePath TestResults.xcresult; then
-              exit 0
-            fi
-          done
-          exit 1
+          # Pick the first available iPhone simulator by UDID — immune to device-name drift
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          for devs in devices.values():
+              for dev in devs:
+                  if dev["isAvailable"] and "iPhone" in dev["name"]:
+                      print(dev["udid"]); raise SystemExit
+          ' || true)
+          if [ -n "$UDID" ]; then
+            DEST="id=$UDID"
+          else
+            DEST='platform=iOS Simulator,name=iPhone 17 Pro,OS=newest'
+          fi
+          echo "Destination: $DEST"
+          xcodebuild test \
+            -project StevePinyin.xcodeproj \
+            -scheme StevePinyin \
+            -destination "$DEST" \
+            -only-testing:StevePinyinTests \
+            -resultBundlePath TestResults.xcresult
 
       - name: Upload test results
         if: always()
