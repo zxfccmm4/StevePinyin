@@ -1,0 +1,21 @@
+.DS_Store
+
+# Xcode user data
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Build output
+build/
+DerivedData/
+
+# Swift Package Manager
+.build/
+
+# Local backup artifacts
+_ConflictBackups/
+*.xcodeproj.backup*/
+
