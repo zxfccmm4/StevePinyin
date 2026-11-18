@@ -1,4 +1,8 @@
 # StevePinyin × WWDC26 Phase 1+2 集成完成报告
+> [!NOTE]
+> 本文档为 2026-06 Phase 1+2 阶段的历史记录，所述文件路径与结构已被后续重构取代。
+> 当前项目终态见 [WWDC26_IMPLEMENTATION_SUMMARY.md](WWDC26_IMPLEMENTATION_SUMMARY.md)。
+
 
 **集成时间**: 2026-06-24  
 **状态**: ✅ **构建成功**
