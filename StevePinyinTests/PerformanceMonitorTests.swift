@@ -61,13 +61,13 @@ struct PerformanceMonitorTests {
         #expect(PerformanceMonitor.shared.immediateEventCount == 205)
     }
 
-    private func waitForPerformanceEvent(title: String) async {
-        for _ in 0..<10 {
+    private func waitForPerformanceEvent(title: String, timeout: Duration = .seconds(5)) async {
+        let deadline = ContinuousClock.now + timeout
+        while ContinuousClock.now < deadline {
             if PerformanceMonitor.shared.events.contains(where: { $0.title == title }) {
                 return
             }
-
-            await Task.yield()
+            try? await Task.sleep(for: .milliseconds(10))
         }
     }
 }
