@@ -85,11 +85,11 @@ xcrun simctl spawn <udid> defaults write xyz.2020713.StevePinyin savedAvatarPack
 
 ---
 
-## 📝 已知技术债（非阻塞）
+## 📝 技术债状态（已清零）
 
-1. `Localizable.xcstrings` 尚有约 55 个历史键缺 zh-Hans 翻译（Intents 错误提示、DuplicateContactManager 进度文案、ImportAllContactsSheet、MatchPreviewView 等，多为升级前遗留）；可用脚本扫描 `NSLocalizedString` 与 xcstrings 差集定位。
-2. `_ConflictBackups/`（iCloud 冲突副本）与 `StevePinyin.xcodeproj.backup.20260624123207/` 仍在仓库目录，建议确认后删除。
-3. 工作区含大量未提交改动（基线仅 Initial Commit），提交切分策略待定。
+1. ✅ `Localizable.xcstrings` zh-Hans 缺失键已从 55 → 0（提交 `787857b`，目录增至 923 键，常用词同步补齐 ja/ko/zh-Hant/zh-HK/zh-Hant-TW）。
+2. ✅ `_ConflictBackups/` 与 `StevePinyin.xcodeproj.backup.20260624123207/` 已删除（内容确认全部被现行代码取代；归档保存在 `/tmp/_ConflictBackups-*.zip` 与 `/tmp/StevePinyin-pbxproj-backup-*.zip`，系统重启后自动清除）。
+3. ✅ 全部改动已提交：`f206426`（升级主体）与 `787857b`（本地化补齐），工作树干净。仓库尚未配置远端。
 
 ---
 
