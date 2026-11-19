@@ -52,20 +52,20 @@ jobs:
 
       - name: Package IPA
         run: |
-          APP=$(find build/StevePinyin.xcarchive/Products/Applications -maxdepth 1 -name '*.app' | head -1)
+          APP=$(find "$GITHUB_WORKSPACE/build/StevePinyin.xcarchive/Products/Applications" -maxdepth 1 -name '*.app' | head -1)
           [ -n "$APP" ] || { echo "::error::No .app found in archive"; exit 1; }
-          VERSION=$(defaults read "$APP/Info" CFBundleShortVersionString)
-          BUILD=$(defaults read "$APP/Info" CFBundleVersion)
+          VERSION=$(plutil -extract CFBundleShortVersionString raw "$APP/Info.plist")
+          BUILD=$(plutil -extract CFBundleVersion raw "$APP/Info.plist")
           mkdir Payload
           cp -R "$APP" Payload/
           ASSET="StevePinyin_v${VERSION}_b${{ github.run_number }}.ipa"
-          zip -qry "$ASSET" Payload
+          zip -qry "$GITHUB_WORKSPACE/$ASSET" Payload
           {
             echo "VERSION=$VERSION"
             echo "BUILD=$BUILD"
             echo "ASSET=$ASSET"
           } >> "$GITHUB_ENV"
-          ls -lh "$ASSET"
+          ls -lh "$GITHUB_WORKSPACE/$ASSET"
 
       - name: Create GitHub Release and upload IPA
         uses: softprops/action-gh-release@v2
