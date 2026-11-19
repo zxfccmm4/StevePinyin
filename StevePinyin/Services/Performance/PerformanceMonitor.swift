@@ -383,12 +383,22 @@ final class PerformanceMonitor {
     ) {
         syncLogger.info("\(title, privacy: .public): \(detail, privacy: .public)")
 
-        Task { @MainActor in
-            PerformanceMonitor.shared.record(
-                title: title,
-                detail: detail,
-                metadata: metadata
-            )
+        if Thread.isMainThread {
+            MainActor.assumeIsolated {
+                PerformanceMonitor.shared.record(
+                    title: title,
+                    detail: detail,
+                    metadata: metadata
+                )
+            }
+        } else {
+            Task { @MainActor in
+                PerformanceMonitor.shared.record(
+                    title: title,
+                    detail: detail,
+                    metadata: metadata
+                )
+            }
         }
     }
 
