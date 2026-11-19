@@ -1,0 +1,85 @@
+name: IPA Release
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ipa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Build & Release IPA
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pin Xcode 27.1 (matches local dev build 27A9275)
+        run: |
+          sudo xcode-select -s /Applications/Xcode_27.1.app
+          xcodebuild -version
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('StevePinyin.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Resolve SwiftPM packages
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project StevePinyin.xcodeproj \
+            -scheme StevePinyin
+
+      - name: Archive app (unsigned, no certs on CI)
+        run: |
+          xcodebuild archive \
+            -project StevePinyin.xcodeproj \
+            -scheme StevePinyin \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/StevePinyin.xcarchive \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+
+      - name: Package IPA
+        run: |
+          APP=$(find build/StevePinyin.xcarchive/Products/Applications -maxdepth 1 -name '*.app' | head -1)
+          [ -n "$APP" ] || { echo "::error::No .app found in archive"; exit 1; }
+          VERSION=$(defaults read "$APP/Info" CFBundleShortVersionString)
+          BUILD=$(defaults read "$APP/Info" CFBundleVersion)
+          mkdir Payload
+          cp -R "$APP" Payload/
+          ASSET="StevePinyin_v${VERSION}_b${{ github.run_number }}.ipa"
+          zip -qry "$ASSET" Payload
+          {
+            echo "VERSION=$VERSION"
+            echo "BUILD=$BUILD"
+            echo "ASSET=$ASSET"
+          } >> "$GITHUB_ENV"
+          ls -lh "$ASSET"
+
+      - name: Create GitHub Release and upload IPA
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}-b${{ github.run_number }}
+          name: StevePinyin v${{ env.VERSION }} build ${{ github.run_number }}
+          body: |
+            自动构建：commit ${{ github.sha }}
+
+            - 分支：${{ github.ref_name }}
+            - 版本：v${{ env.VERSION }} (build ${{ env.BUILD }})
+
+            IPA 未签名（CI 无证书），安装方式任选其一：
+            - TrollStore 直接安装
+            - Sideloadly / AltStore 用自己的 Apple ID 重签后安装
+            - 有分发证书时可导入后用 Xcode 重签
+          files: ${{ env.ASSET }}
