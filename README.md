@@ -3,50 +3,65 @@
 [![CI](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ci.yml/badge.svg?branch=ios27-upgrade)](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ci.yml)
 [![IPA Release](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ipa-release.yml/badge.svg?branch=ios27-upgrade)](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ipa-release.yml)
 
-联系人拼音与头像工具箱。为中文联系人补齐姓名/公司拼音（多音字识别）、生成 T9 拨号索引、检测合并重复联系人、批量导入匹配头像，并支持 vCard 与中国黄页导入。
+**English** · [简体中文](README.zh-CN.md)
 
-**本分支（`ios27-upgrade`）为 iOS App 源码**；`main` 分支为头像包数据源仓库（App 内可下载的 vCard / 头像 JSON 数据），两者独立维护。
+Contacts pinyin & avatar toolbox for iOS. It annotates Chinese contact names and company names with pinyin (heteronym-aware), generates T9 dialing indices, detects and merges duplicate contacts, and batch-imports contact avatars — with vCard and China yellow-page import built in.
 
-## 下载安装
+> **Branch note** — `ios27-upgrade` hosts the iOS app source. `main` is the avatar-package data repository consumed by the app at runtime (vCard / avatar JSON packages). The two branches are maintained independently.
 
-代码推送后自动打包 IPA 并发布到 [Releases](https://github.com/zxfccmm4/StevePinyin/releases)。IPA 未签名（CI 无证书），可用 TrollStore 直接安装，或用 Sideloadly / AltStore 重签后安装。
+## Features
 
-## 功能
+| Feature | Description |
+|---|---|
+| Pinyin annotation | Heteronym-aware pinyin for surnames and company names, in toned, plain, or initials format |
+| T9 dialing index | Pinyin initials for the dialer keyboard, so contacts can be found from the Phone app |
+| Duplicate detection | Merge and clean duplicates by name, phone, email, and pinyin |
+| Avatar import | Uniform, sequential, and manual matching modes; URL avatar packages; Apple Intelligence visual QC and semantic recommendations with automatic local fallback |
+| vCard & yellow pages | Local `.vcf` files, URL subscriptions, and one-tap import of common China support numbers |
+| Siri & Shortcuts | Annotate pinyin, build T9, detect duplicates, import avatars — all via voice or Shortcuts, with in-app search |
+| Performance observability | MetricKit + OSLog signposts end to end, with an in-app diagnostics dashboard |
 
-- **拼音注音** — 多音字姓氏与机构名精准注音，带声调 / 全拼 / 首字母多种格式
-- **T9 拨号搜索** — 生成拨号键盘拼音缩写，强化电话 App 快速检索
-- **重复检测** — 按姓名 / 电话 / 邮箱 / 拼音多维合并清理重复联系人
-- **头像导入** — 统一 / 按序 / 手动三种匹配模式，URL 头像包导入，Apple Intelligence 视觉质检与语义推荐（模型不可用时自动回退本地引擎）
-- **vCard 与黄页** — 本地 .vcf 文件、URL 订阅、中国常用客服号码一键导入
-- **Siri 与快捷指令** — 批量加拼音、开 T9、查重复、导入头像均可语音/快捷指令触发，支持应用内搜索
-- **性能观测** — MetricKit + OSLog signpost 全链路打点，App 内诊断看板
+## Download & Install
 
-## 技术要点
+Every push to this repository builds an IPA automatically — grab it from [Releases](https://github.com/zxfccmm4/StevePinyin/releases).
 
-- iOS 27.0 部署目标，Xcode 27.1 构建
-- SwiftUI + Liquid Glass（`GlassDesignSystem` 统一设计系统：`glassEffect` / `GlassEffectContainer` / `.glassProminent`）
-- FoundationModels（`LanguageModelSession.DynamicProfile` + `@Generable` 结构化输出）
-- 联系人写入批量化：200/批 `CNSaveRequest`、80ms 进度节流、批写失败逐条回退
-- 图片管线：CGImageSource 降采样 + NSCache 缓存 + 单飞合并
-- 依赖：[ConfettiSwiftUI](https://github.com/simibac/ConfettiSwiftUI)（SPM）
-- 本地化：简体中文、繁体中文（台湾/香港）、英语、日语、韩语
+The IPA is **unsigned** (no signing certificate on CI). Install it with one of:
 
-## 构建与测试
+- **TrollStore** — install directly
+- **Sideloadly / AltStore** — re-sign with your own Apple ID, then install
+
+## Requirements
+
+- iOS 27.0+
+- Xcode 27.1
+
+## Build & Test
 
 ```bash
-# 打开 Xcode 直接 Cmd+R，或命令行：
+# Build
 xcodebuild -project StevePinyin.xcodeproj -scheme StevePinyin \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 
-# 运行测试套件（68 tests / 20 suites）
+# Test suite (68 tests / 20 suites)
 xcodebuild test -project StevePinyin.xcodeproj -scheme StevePinyin \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:StevePinyinTests
 ```
 
-推送与 PR 自动触发 GitHub Actions CI（`.github/workflows/ci.yml`）。
+Or just open the project in Xcode and hit ⌘R.
 
-## 联系
+Pushes and pull requests run GitHub Actions CI ([ci.yml](.github/workflows/ci.yml)); pushes additionally build and publish an IPA ([ipa-release.yml](.github/workflows/ipa-release.yml)).
 
-- Twitter：[@st7evechou](https://twitter.com/st7evechou)
-- Telegram：[t.me/st7evee](https://t.me/st7evee)
-- 头像包数据仓库：`main` 分支 / [vCards CN](https://github.com/metowolf/vCards)
+## Tech Highlights
+
+- **SwiftUI + Liquid Glass** — unified design system: `glassEffect`, `GlassEffectContainer`, `.glassProminent`
+- **FoundationModels** — `LanguageModelSession.DynamicProfile` with `@Generable` structured output
+- **Contacts batching** — 200-contact `CNSaveRequest` batches, 80 ms progress throttling, per-item fallback when a batch fails
+- **Image pipeline** — `CGImageSource` downsampling, `NSCache`, single-flight merging
+- **Localization** — Simplified Chinese, Traditional Chinese (Taiwan / Hong Kong), English, Japanese, Korean
+- **Dependency** — [ConfettiSwiftUI](https://github.com/simibac/ConfettiSwiftUI) via SwiftPM
+
+## Contact
+
+- Twitter: [@st7evechou](https://twitter.com/st7evechou)
+- Telegram: [t.me/st7evee](https://t.me/st7evee)
+- Avatar package data: `main` branch / [vCards CN](https://github.com/metowolf/vCards)
