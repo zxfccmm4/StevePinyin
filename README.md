@@ -1,10 +1,15 @@
 # StevePinyin
 
 [![CI](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ci.yml/badge.svg?branch=ios27-upgrade)](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ci.yml)
+[![IPA Release](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ipa-release.yml/badge.svg?branch=ios27-upgrade)](https://github.com/zxfccmm4/StevePinyin/actions/workflows/ipa-release.yml)
 
 联系人拼音与头像工具箱。为中文联系人补齐姓名/公司拼音（多音字识别）、生成 T9 拨号索引、检测合并重复联系人、批量导入匹配头像，并支持 vCard 与中国黄页导入。
 
 **本分支（`ios27-upgrade`）为 iOS App 源码**；`main` 分支为头像包数据源仓库（App 内可下载的 vCard / 头像 JSON 数据），两者独立维护。
+
+## 下载安装
+
+代码推送后自动打包 IPA 并发布到 [Releases](https://github.com/zxfccmm4/StevePinyin/releases)。IPA 未签名（CI 无证书），可用 TrollStore 直接安装，或用 Sideloadly / AltStore 重签后安装。
 
 ## 功能
 
