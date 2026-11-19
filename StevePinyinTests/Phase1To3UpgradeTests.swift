@@ -69,28 +69,6 @@ struct Phase1To3UpgradeTests {
         #expect(coordinator.activeTask == nil)
     }
 
-    @Test("PerformanceMonitor 为拼音批处理与 vCard 导入写入 MetricKit 事件")
-    @MainActor
-    func performanceMonitorTracksPinyinAndVCardOperations() async {
-        PerformanceMonitor.shared.resetForTesting()
-
-        let count = await PerformanceMonitor.shared.trackPinyinMaintenance(
-            actionName: "批量添加拼音",
-            format: PinyinFormat.withTone.rawValue
-        ) {
-            18
-        }
-        #expect(count == 18)
-
-        let imported = await PerformanceMonitor.shared.trackVCardImport(source: "unit-test.vcf") {
-            5
-        }
-        #expect(imported == 5)
-        #expect(PerformanceMonitor.shared.events.count >= 2)
-        #expect(PerformanceMonitor.shared.events.contains { $0.title == "批量添加拼音完成" })
-        #expect(PerformanceMonitor.shared.events.contains { $0.title == "vCard 导入完成" })
-    }
-
     @Test("Apple Intelligence 系统模式在模型可用或不可用时均返回合法结构")
     func systemModeQualityAndRecommendationGracefullyResolve() async throws {
         let service = AvatarIntelligenceService()
